@@ -1,2 +1,0 @@
-# walab
-Walmart LAbs
