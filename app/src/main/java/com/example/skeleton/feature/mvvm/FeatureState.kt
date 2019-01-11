@@ -12,6 +12,7 @@ class FeatureState {
     val onItemFetched = MutableLiveField<Event<Boolean>>()
     val viewAnimatorId = MutableLiveField(R.id.progress_frame)
     val apiErrorMessage = MutableLiveField(R.string.generic_error_message)
+    val notifyDataSetChanged = MutableLiveField<Event<Boolean>>()
 
     operator fun invoke(func: FeatureState.() -> Unit) = func()
 }

@@ -48,6 +48,10 @@ class FeatureFragment : BaseFragment<FeatureViewModel, FeatureViewModel.Factory,
             }
         }
         view_pager.addOnPageChangeListener(onPageChangeListener as ViewPager.SimpleOnPageChangeListener)
+
+        viewModel.state.notifyDataSetChanged.observe(this, Observer {
+            adapter.notifyDataSetChanged()
+        })
     }
 
     override fun onDestroyView() {

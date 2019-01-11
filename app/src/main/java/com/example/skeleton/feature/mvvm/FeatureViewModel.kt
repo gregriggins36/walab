@@ -62,6 +62,7 @@ class FeatureViewModel(
         state.apply {
             products.addAll(productsResult.items)
             nextPage.postValue(productsResult.nextPage)
+            notifyDataSetChanged.postValue(Event(true))
         }
     }
 
