@@ -41,10 +41,15 @@ public class ProductPageView extends CardView {
     }
 
     public void setContent(@NonNull Product product) {
-        mProductTitle.setText(product.getName());
-        mProductPrice.setText(String.valueOf(product.getSalePrice()));
-        Glide.with(getContext())
-                .load(product.getLargeImage())
-                .into(mProductImage);
+        if (product == Product.Companion.getERROR_PRODUCT()) {
+            // Display error view within card with retry button
+            mProductTitle.setText("Error!!!");
+        } else {
+            mProductTitle.setText(product.getName());
+            mProductPrice.setText(String.valueOf(product.getSalePrice()));
+            Glide.with(getContext())
+                    .load(product.getLargeImage())
+                    .into(mProductImage);
+        }
     }
 }

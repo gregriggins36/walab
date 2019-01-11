@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.example.skeleton.R
 import com.example.skeleton.feature.ProductAdapter.OnProductActionListener
 import com.example.skeleton.feature.ProductManager
+import com.example.skeleton.feature.model.Product.Companion.ERROR_PRODUCT
 import com.example.skeleton.feature.model.ProductsResult
 import com.example.skeleton.mvvm.BaseViewModel
 import com.example.skeleton.util.Event
@@ -67,7 +68,10 @@ class FeatureViewModel(
     }
 
     private fun onNextPageProductFail(t: Throwable) {
-        // adjust error message based on Throwable type
+        state.apply {
+            products.add(ERROR_PRODUCT)
+            notifyDataSetChanged.postValue(Event(true))
+        }
         Timber.d(t)
     }
 
