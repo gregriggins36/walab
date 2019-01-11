@@ -27,6 +27,10 @@ class FeatureFragment : BaseFragment<FeatureViewModel, FeatureViewModel.Factory,
         viewModel.state.onItemFetched.observe(this, Observer {
             renderItems(viewModel.state.products)
         })
+
+        viewModel.state.viewAnimatorId.observe(this, Observer {
+            view_animator.displayedChildId = it!!
+        })
     }
 
     private fun renderItems(items: ArrayList<Product>) {

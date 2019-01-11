@@ -3,6 +3,7 @@ package com.example.skeleton.feature.mvvm
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.example.skeleton.R
 import com.example.skeleton.feature.ProductAdapter.OnProductActionListener
 import com.example.skeleton.feature.ProductManager
 import com.example.skeleton.feature.model.ProductsResult
@@ -26,17 +27,16 @@ class FeatureViewModel(
 
     private fun onProductSuccess(productsResult: ProductsResult) {
         state.apply {
+            viewAnimatorId.postValue(R.id.view_pager)
             products.addAll(productsResult.items)
             onItemFetched.postValue(Event(true))
         }
     }
 
     private fun onProductFail(t: Throwable) {
+        // adjust error message based on Throwable type
+        state.viewAnimatorId.postValue(R.id.error_frame)
         Timber.d(t)
-    }
-
-    override fun onInitialProductCardInstantiated() {
-
     }
 
     override fun onProductClick(position: Int) {
