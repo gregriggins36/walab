@@ -12,14 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ProductAdapter extends PagerAdapter {
-
     private final ArrayList<Product> mProducts;
     private final ProductPageView[] mProductPageViews;
     private final OnProductActionListener mOnProductActionListener;
-    //private final int mInitialPosition;
     private final int mCardElevation;
-    private boolean mFirstTimeEnteringView = true;
-    private ProductPageView mInitiallySelectedCardView;
 
     public ProductAdapter(
             @NonNull Context context,
@@ -28,7 +24,6 @@ public class ProductAdapter extends PagerAdapter {
         mOnProductActionListener = onProductActionListener;
         mProducts = products;
         mProductPageViews = new ProductPageView[mProducts.size()];
-        //mInitialPosition = initialPosition;
         mCardElevation = context.getResources().getDimensionPixelSize(R.dimen.spacing_xsmall);
     }
 
@@ -47,18 +42,7 @@ public class ProductAdapter extends PagerAdapter {
         tutorialPageView.setContent(mProducts.get(position));
         tutorialPageView.setOnClickListener(view -> mOnProductActionListener.onProductClick(position));
         container.addView(tutorialPageView);
-//        if (mFirstTimeEnteringView && position == mInitialPosition) {
-//            mInitiallySelectedCardView = tutorialPageView;
-//            mOnProductActionListener.onInitialProductCardInstantiated();
-//            mFirstTimeEnteringView = false;
-//        }
         return tutorialPageView;
-    }
-
-    public void fadeInInitiallySelectedCardContent() {
-        if (mInitiallySelectedCardView != null) {
-           // mInitiallySelectedCardView.showActionAndBody(true, true);
-        }
     }
 
     public ProductPageView getView(int position) {
@@ -81,13 +65,6 @@ public class ProductAdapter extends PagerAdapter {
     }
 
     public interface OnProductActionListener {
-        /**
-         * Called when the initially selected card is instantiated. This is necessary since by default
-         * the view pager will instantiate at least two items when its first created, so we need to keep
-         * track of the initial one to hide its elements and start the animations.
-         */
-        void onInitialProductCardInstantiated();
-
         void onProductClick(int position);
     }
 }

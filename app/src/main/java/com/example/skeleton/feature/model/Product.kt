@@ -1,7 +1,14 @@
 package com.example.skeleton.feature.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Product(
-    val largeImage: String,
+    @SerializedName("largeImage") val largeImage: String,
     val name: String,
-    val salePrice: Float
+    @SerializedName("salePrice") val salePrice: Float
+)
+
+data class ProductsResult(
+    @SerializedName("nextPage") val nextPage: String,
+    val items: List<Product>
 )
