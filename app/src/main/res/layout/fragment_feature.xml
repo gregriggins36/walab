@@ -26,6 +26,7 @@
             <include layout="@layout/view_progress_content"/>
             <include layout="@layout/view_error_content"
                      bind:viewModel="@{viewModel}"/>
+            <include layout="@layout/view_empty_content"/>
         </com.example.skeleton.ui.BetterViewAnimator>
     </android.support.constraint.ConstraintLayout>
 </layout>

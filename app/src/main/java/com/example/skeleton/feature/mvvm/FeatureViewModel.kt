@@ -30,10 +30,14 @@ class FeatureViewModel(
 
     private fun onProductSuccess(productsResult: ProductsResult) {
         state.apply {
-            viewAnimatorId.postValue(R.id.view_pager)
-            products.addAll(productsResult.items)
-            nextPage.postValue(productsResult.nextPage)
-            onItemFetched.postValue(Event(true))
+            if (productsResult.items.isNullOrEmpty()) {
+                viewAnimatorId.postValue(R.id.empty_content)
+            } else {
+                viewAnimatorId.postValue(R.id.view_pager)
+                products.addAll(productsResult.items)
+                nextPage.postValue(productsResult.nextPage)
+                onItemFetched.postValue(Event(true))
+            }
         }
     }
 
