@@ -13,9 +13,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import timber.log.Timber
 
+const val ITEM_THRESHOLD_TO_FETCH_MORE = 5
+
 class FeatureViewModel(
     application: Application,
-    productManager: ProductManager) : BaseViewModel(application), OnProductActionListener {
+    private val productManager: ProductManager) : BaseViewModel(application), OnProductActionListener {
     val state = FeatureState()
     var productsDisposable = Disposables.empty()
 
@@ -29,6 +31,7 @@ class FeatureViewModel(
         state.apply {
             viewAnimatorId.postValue(R.id.view_pager)
             products.addAll(productsResult.items)
+            nextPage.postValue(productsResult.nextPage)
             onItemFetched.postValue(Event(true))
         }
     }
@@ -41,6 +44,30 @@ class FeatureViewModel(
 
     override fun onProductClick(position: Int) {
 
+    }
+
+    fun onPageSelected(position: Int) {
+        if (position == state.products.size - ITEM_THRESHOLD_TO_FETCH_MORE) {
+            getNextPage()
+        }
+    }
+
+    private fun getNextPage() {
+        productsDisposable = productManager.products(state.nextPage.value)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onNextPageProductSuccess, ::onNextPageProductFail)
+    }
+
+    private fun onNextPageProductSuccess(productsResult: ProductsResult) {
+        state.apply {
+            products.addAll(productsResult.items)
+            nextPage.postValue(productsResult.nextPage)
+        }
+    }
+
+    private fun onNextPageProductFail(t: Throwable) {
+        // adjust error message based on Throwable type
+        Timber.d(t)
     }
 
     override fun onCleared() {

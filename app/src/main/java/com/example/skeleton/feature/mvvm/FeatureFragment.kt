@@ -2,6 +2,7 @@ package com.example.skeleton.feature.mvvm
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.View
 import com.example.skeleton.R
 import com.example.skeleton.ext.app
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_feature.*
 class FeatureFragment : BaseFragment<FeatureViewModel, FeatureViewModel.Factory, FeatureComponent>() {
     override val viewModelClass = FeatureViewModel::class.java
     override val layoutResId = R.layout.fragment_feature
+
+    private var onPageChangeListener: ViewPager.OnPageChangeListener? = null
 
     override fun createComponent(): FeatureComponent = DaggerFeatureComponent
         .builder()
@@ -39,5 +42,18 @@ class FeatureFragment : BaseFragment<FeatureViewModel, FeatureViewModel.Factory,
         view_pager.setPageTransformer(true, ProductPageTransformer())
         view_pager.offscreenPageLimit = 3
         view_pager.pageMargin = resources.getDimensionPixelSize(R.dimen.spacing_small)
+        onPageChangeListener = object: ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                viewModel.onPageSelected(position)
+            }
+        }
+        view_pager.addOnPageChangeListener(onPageChangeListener as ViewPager.SimpleOnPageChangeListener)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (onPageChangeListener != null) {
+            view_pager.removeOnPageChangeListener(onPageChangeListener!!)
+        }
     }
 }

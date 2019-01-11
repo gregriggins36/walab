@@ -8,6 +8,7 @@ import com.umairjavid.kombind.model.MutableLiveField
 
 class FeatureState {
     val products = MutableLiveArrayList<Product>()
+    val nextPage = MutableLiveField<String>()
     val onItemFetched = MutableLiveField<Event<Boolean>>()
     val viewAnimatorId = MutableLiveField(R.id.progress_frame)
     val apiErrorMessage = MutableLiveField(R.string.generic_error_message)
