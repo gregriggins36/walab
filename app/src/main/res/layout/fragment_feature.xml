@@ -15,8 +15,8 @@
                 android:clipChildren="false"
                 android:layout_marginTop="@dimen/spacing_xxl"
                 android:layout_marginBottom="@dimen/pager_bottom_padding"
-                android:paddingStart="@dimen/pager_horizontal_margin"
-                android:paddingEnd="@dimen/pager_horizontal_margin"
+                android:layout_marginStart="@dimen/pager_horizontal_margin"
+                android:layout_marginEnd="@dimen/pager_horizontal_margin"
                 tools:background="@android:color/white"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
